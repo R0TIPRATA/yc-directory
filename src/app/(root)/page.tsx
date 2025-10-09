@@ -19,6 +19,11 @@ export default async function Home({
         </p>
         <SearchForm query={query} />
       </section>
+      <section className="section_container">
+        <p>
+            {query? `Search results for query: ${query}` : 'All startups'}
+        </p>
+      </section>
     </>
   );
 }
