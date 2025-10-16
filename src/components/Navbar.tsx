@@ -16,6 +16,9 @@ const Navbar = async () => {
           {session && session.user ? (
             <>
               <p>Hello, {session.user.name}</p>
+              <button type="button">
+                <Link href="/startup/create">Create</Link>
+              </button>
               <form
                 action={async () => {
                   "use server";

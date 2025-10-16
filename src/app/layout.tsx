@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Work_Sans } from "next/font/google";
 import "./globals.css";
+import "easymde/dist/easymde.min.css";
+import { Toaster } from "sonner";
 
 const workSans = Work_Sans({
   variable: "--font-work-sans",
@@ -23,6 +25,7 @@ export default function RootLayout({
         className={`${workSans.variable}} antialiased`}
       >
         {children}
+        <Toaster richColors/>
       </body>
     </html>
   );
