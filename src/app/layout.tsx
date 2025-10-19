@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Work_Sans } from "next/font/google";
+import { SessionProvider } from "next-auth/react"
+
 import "./globals.css";
 import "easymde/dist/easymde.min.css";
 import { Toaster } from "sonner";
+import { writeClient } from "@/sanity/lib/write-client";
 
 const workSans = Work_Sans({
   variable: "--font-work-sans",
@@ -19,14 +22,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  // writeClient.delete({query: `*[_type == "startup" && _id == 'm6nSyVU6lqC08JIvifCa2V' ][0]`})
   return (
     <html lang="en">
+      <SessionProvider>
       <body
         className={`${workSans.variable}} antialiased`}
       >
         {children}
         <Toaster richColors/>
       </body>
+      </SessionProvider>
     </html>
   );
 }

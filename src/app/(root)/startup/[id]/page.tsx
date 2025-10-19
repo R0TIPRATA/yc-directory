@@ -19,6 +19,8 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const parsedContent = md.render(post?.pitch || "");
 
   if (!post) return notFound();
+
+  console.log("post => ", post )
   return (
     <>
       <section className="pink_container !min-h-[230px]">
@@ -39,13 +41,17 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
               href={`/user/${post.author?._id}`}
               className="flex gap-2 items-center mb-3"
             >
-              <Image
-                src={post!.author!.image!}
-                alt="avatar"
-                width={64}
-                height={64}
-                className="rounded-fill drop-shadow-lg"
-              />
+              {post?.author?.image ? (
+                <Image
+                  src={post.author.image}
+                  alt="avatar"
+                  width={64}
+                  height={64}
+                  className="rounded-full drop-shadow-lg"
+                />
+              ) : (
+                <p>Author image not found.</p>
+              )}
               <div>
                 <p className="text-20-medium">{post?.author?.name}</p>
                 <p className="text-16-medium !text-black-300">
@@ -67,7 +73,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
 
         <hr className="divider" />
-        <Suspense fallback={<Skeleton className="view_skeleton"/>}>
+        <Suspense fallback={<Skeleton className="view_skeleton" />}>
           <View id={id} />
         </Suspense>
       </section>

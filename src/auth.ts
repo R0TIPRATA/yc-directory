@@ -1,10 +1,10 @@
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
-import { client } from "./sanity/lib/client";
-import { writeClient } from "./sanity/lib/write-client";
-import { AUTHOR_BY_GITHUB_ID_QUERY } from "./sanity/lib/queries";
+import { AUTHOR_BY_GITHUB_ID_QUERY } from "@/sanity/lib/queries";
+import { client } from "@/sanity/lib/client";
+import { writeClient } from "@/sanity/lib/write-client";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [GitHub],
   callbacks: {
     async signIn({
@@ -16,6 +16,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         .fetch(AUTHOR_BY_GITHUB_ID_QUERY, {
           id,
         });
+
+      console.log("existing user? => ", existingUser)
 
       if (!existingUser) {
         await writeClient.create({
@@ -31,7 +33,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       return true;
     },
-    //create jwt token sanity can use to link the github user to the sanity autho that can then create the startup
     async jwt({ token, account, profile }) {
       if (account && profile) {
         const user = await client
@@ -40,7 +41,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             id: profile?.id,
           });
 
-        token.id = user._id;
+        token.id = user?._id;
       }
 
       return token;
