@@ -16,7 +16,7 @@ export default async function Home({
 
   const session = await auth();
 
-  console.log(session?.id)
+  console.log(session?.id);
 
   // const posts = [
   //   {
@@ -45,7 +45,9 @@ export default async function Home({
         <SearchForm query={query} />
       </section>
       <section className="section_container">
-        <p>{query ? `Search results for query: ${query}` : "All startups"}</p>
+        <h3 className="text-30-bold">
+          {query ? `Search results for query: ${query}` : "All startups"}
+        </h3>
         <ul className="mt-7 card_grid">
           {posts?.length > 0 ? (
             posts.map((post: StartupCardType) => (

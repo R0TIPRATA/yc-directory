@@ -1,5 +1,4 @@
 import { defineField, defineType } from "sanity";
-import { UserIcon } from "lucide-react";
 
 export const startup = defineType({
   name: "startup",
