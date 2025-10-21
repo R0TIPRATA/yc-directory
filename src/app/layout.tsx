@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Work_Sans } from "next/font/google";
+import { SessionProvider } from "next-auth/react"
+
 import "./globals.css";
+import "easymde/dist/easymde.min.css";
+import { Toaster } from "sonner";
+import { writeClient } from "@/sanity/lib/write-client";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const workSans = Work_Sans({
+  variable: "--font-work-sans",
   subsets: ["latin"],
 });
 
@@ -22,13 +22,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  // writeClient.delete({query: `*[_type == "startup" && _id == 'm6nSyVU6lqC08JIvifCa2V' ][0]`})
   return (
     <html lang="en">
+      <SessionProvider>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${workSans.variable}} antialiased`}
       >
         {children}
+        <Toaster richColors/>
       </body>
+      </SessionProvider>
     </html>
   );
 }
